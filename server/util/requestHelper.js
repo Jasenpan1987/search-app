@@ -1,3 +1,5 @@
+// sending request to google and get the entire response dom string
+
 const axios = require("axios");
 
 const HEAD_URL = "http://www.google.com/search?q=";

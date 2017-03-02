@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import { searchAct } from "../actions/search";
 
 class Search extends Component {
     constructor(props){
@@ -7,35 +10,74 @@ class Search extends Component {
         this.handleKeywordChange = this.handleKeywordChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.validate = this.validate.bind(this);
 
         this.state = {
-            keyword: "online title search",
-            url: "www.infotrack.com.au"
+            keywords: "",
+            url: "",
+            error: []
+        }
+    }
+
+    validate(){
+        const error = [];
+
+        if(this.state.keywords.length === 0){
+            console.log(1, this.state.error)
+            error.push("Please provide some keywords")
+        }
+
+        if(this.state.url.length === 0){
+            console.log(2, this.state.error)
+            error.push("Please prodide a url");
+        }
+
+        if(this.state.keywords.length >= 70){
+            console.log(3, this.state.error)
+            error.push("Too many keywords");
+        }
+
+        if(error.length>0){
+            this.setState({
+                error
+            });
+        }else{
+            this.props.search(
+                formatKeywords(this.state.keywords), 
+                formatUrl(this.state.url)
+            );
         }
     }
 
     handleKeywordChange(e){
         this.setState({
-            keyword: e.target.value
+            keywords: e.target.value,
+            error: []
         });
     }
 
     handleUrlChange(e){
         this.setState({
-            url: e.target.value
+            url: e.target.value,
+            error: []
         });
     }
 
     handleSearch(e){
         e.preventDefault();
-        console.log(this.state.keyword, this.state.url)
+        const { keywords, url } = this.state;
+        
+        this.validate(keywords, url);
+        const formarttedUrl = formatUrl(url);
+
+        console.log(this.state.keywords, formarttedUrl);
     }
 
     render(){
         return (
-            <div className="col s6 offset-s3">
+            <div>
                 <div className="mui-form">
-                    <legend>Title</legend>
+                    <h3>Search App</h3>
                     <form onSubmit={this.handleSearch}>
                         <div className="mui-textfield">
                             <input type="text" placeholder="Keywords"
@@ -52,13 +94,29 @@ class Search extends Component {
                         <div className="form-group pull-right">
                             <input type="submit" value="GO" className="btn"/>
                         </div>
-
                     </form>
+                    
+                    <ul className="errorlist">
+                        {this.state.error.map((err, idx) => (<li key={idx}>{err}</li>))}
+                    </ul>
                 </div>
             </div>
-            
         )
     }
 }
 
-export default Search;
+function formatUrl(url){
+    return url.replace(/(https?:\/\/)?(www\.)?/, "");
+}
+
+function formatKeywords(keywords){
+    return keywords.trim().replace(" ", "+");
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        search: (keywords, url) => dispatch(searchAct(keywords, url))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Search);

@@ -9,12 +9,10 @@ module.exports = (resource) => {
     // console.log(resource)
     // linkArr = ["url?q=http://www.infotrack.com.au&amp;abcxyz123" ...]
     resource.replace(linkReg, (j, s, d) => {
-        console.log(s)
         linkArr.push(s); 
     }); 
     
     return linkArr.map(link => {
-        console.log(link)
         return formatLink(link);
     });
 }

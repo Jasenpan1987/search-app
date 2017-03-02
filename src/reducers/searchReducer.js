@@ -2,8 +2,8 @@ import { SEARCH_SUCCESS, SEARCH_ERROR } from "../constants/types";
 
 const initState = {
     data: [],
-    status: ""
-}
+    status: "init"
+};
 
 export default (state=initState, action) =>{
     switch(action.type){
