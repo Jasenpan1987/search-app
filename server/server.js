@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors")
 
 const requestHelper = require("./util/requestHelper");
@@ -7,20 +8,32 @@ const urlHelper = require("./util/urlMatchHelper");
 
 const app = express();
 
+app.use(express.static(path.resolve(__dirname, "../build")));
+
 app.use(cors());
-// const regx = /(?:<div\sclass=\"g\">[\s\S]*?<h3\sclass=\"r\">\s*?<a\shref=\")([^"]*)/g;
 
 app.get("/api", (req, res) => {
-    // console.log("request income")
-    const { keywords, url } = req.query;
-    
-    // console.log(keywords, url);
-    // res.json({keywords, url});
+    const { keywords, urlkeywords } = req.query;
 
     requestHelper(keywords)
         .then(domString => parseHelper(domString))
-        .then(links => urlHelper(links, url))
-        .then(linkIds => res.json(linkIds))
+        .then(links => urlHelper(links, urlkeywords))
+        .then(linkIds => {
+            console.log("linkIds ", linkIds)
+            res.status(200).json(linkIds);
+        })
+        .catch(error => {
+            console.log("error ", error)
+            res.status(500).send(new Error("Server Error"));
+        })
 });
 
-app.listen(8080);
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "index.html"))
+})
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(8080, () => {
+    console.log("server listen to " + PORT);
+});

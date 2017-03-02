@@ -1,8 +1,14 @@
-// create new array of index if the url can be found in the link
+// create a string of ids which has been found in the links
 
 module.exports = function(links, url){
-    return links.map((link, idx) => {
-        console.log(link, idx, url)
-        if(link.indexOf(url) !== -1) return idx;
-    });
+    const linkArr = links.map((link, idx) => {
+        if(link.toLowerCase().indexOf(url) !== -1) return idx;
+        else return -1;
+    })
+    .filter(id => id !== -1);
+
+    // throw new Error("server error")
+
+    if(linkArr.length===0) return "0";
+    else return linkArr.join(", ");
 };

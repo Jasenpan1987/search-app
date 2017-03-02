@@ -1,19 +1,26 @@
 import axios from "axios";
 
-import { SEARCH_SUCCESS, SEARCH_ERROR } from "../constants/types";
+import { SEARCH_SUCCESS, SEARCH_ERROR, SEARCH_LOADING } from "../constants/types";
 
 const BACK_END_URL = "http://localhost:8080/api/";
 
-export const searchAct = (keywords, url) => {
-    console.log("searchAct: ", keywords, url)
+export const searchAct = (keywords, urlkeywords) => {
+    console.log("searchAct: ", keywords, urlkeywords)
     return dispatch => {
-        axios.get(`${BACK_END_URL}?keywords=${keywords}&url=${url}`)
+        dispatch({ type: SEARCH_LOADING, payload: true}); // loading starts
+
+        axios.get(`${BACK_END_URL}?keywords=${keywords}&urlkeywords=${urlkeywords}`)
             .then(result => result.data)
             .then(data => {
-                console.log(data);
                 return data;
         })
-        .then(data => dispatch({ type: SEARCH_SUCCESS, payload: data }))
-        .catch(err => dispatch({ type: SEARCH_ERROR, payload: err.message }))
+        .then(data => {
+            dispatch({ type: SEARCH_LOADING, payload: false }); // loading ends
+            dispatch({ type: SEARCH_SUCCESS, payload: {data, status: "success"} });
+        })
+        .catch(err => {
+            dispatch({ type: SEARCH_LOADING, payload: false }); // loading ends
+            dispatch({ type: SEARCH_ERROR, payload: {data: "", status: "failed"} });
+        })
     };
 };

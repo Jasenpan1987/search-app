@@ -90,10 +90,13 @@ class Search extends Component {
                                 onChange={this.handleUrlChange}
                             />
                         </div>
-                        
-                        <div className="form-group pull-right">
-                            <input type="submit" value="GO" className="btn"/>
-                        </div>
+                        { this.props.loading ? 
+                            <div className="loader mui--text-center"></div>
+                            :
+                            <div className="form-group pull-right">
+                                <input type="submit" value="GO" className="btn submitbtn"/>
+                            </div>
+                        }
                     </form>
                     
                     <ul className="errorlist">
@@ -106,11 +109,17 @@ class Search extends Component {
 }
 
 function formatUrl(url){
-    return url.replace(/(https?:\/\/)?(www\.)?/, "");
+    return url.replace(/(https?:\/\/)?(www\.)?/, "").split(".")[0]
 }
 
 function formatKeywords(keywords){
     return keywords.trim().replace(" ", "+");
+}
+
+const mapStateToProps = state => {
+    return {
+        loading: state.loading
+    }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -119,4 +128,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

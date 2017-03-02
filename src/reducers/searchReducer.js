@@ -1,7 +1,7 @@
 import { SEARCH_SUCCESS, SEARCH_ERROR } from "../constants/types";
 
 const initState = {
-    data: [],
+    data: "",
     status: "init"
 };
 
@@ -12,7 +12,7 @@ export default (state=initState, action) =>{
         return { data, status };
 
         case SEARCH_ERROR:
-        return { data: [], status: action.payload.status };
+        return { data: "", status: action.payload.status };
 
         default:
         return state;
