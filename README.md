@@ -10,11 +10,11 @@ For instance:
 
 After you click GO, let's say google gives you back such a list:
 
-www.helloworld.com          (0)
-www.helloworld.com/foo      (1)
-www.foo.com                 (2)
-www.bar.com                 (3)
-www.foo.helloworld.com      (4)
+(0) www.helloworld.com          
+(1) www.helloworld.com/foo      
+(2) www.foo.com                 
+(3) www.bar.com                 
+(4) www.foo.helloworld.com      
 
 The result will be 0, 1, 4, since they matches the url you have given.
 

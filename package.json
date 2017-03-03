@@ -6,12 +6,17 @@
     "axios": "^0.15.3",
     "cors": "^2.8.1",
     "express": "^4.15.0",
+    "extend-tape": "^1.2.0",
     "react": "15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "15.4.2",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-form": "^6.5.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3",
+    "tape-jsx-equals": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
@@ -20,6 +25,7 @@
     "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
     "babel-preset-react-app": "^2.1.1",
+    "babel-register": "^6.23.0",
     "babel-runtime": "^6.20.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
