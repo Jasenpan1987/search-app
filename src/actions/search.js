@@ -5,7 +5,6 @@ import { SEARCH_SUCCESS, SEARCH_ERROR, SEARCH_LOADING } from "../constants/types
 const BACK_END_URL = "http://localhost:8080/api/";
 
 export const searchAct = (keywords, urlkeywords) => {
-    console.log("searchAct: ", keywords, urlkeywords)
     return dispatch => {
         dispatch({ type: SEARCH_LOADING, payload: true}); // loading starts
 

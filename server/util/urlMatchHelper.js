@@ -2,7 +2,7 @@
 
 module.exports = function(links, url){
     const linkArr = links.map((link, idx) => {
-        if(link.toLowerCase().indexOf(url) !== -1) return idx;
+        if(link.toLowerCase().indexOf(url.toLowerCase()) !== -1) return idx;
         else return -1;
     })
     .filter(id => id !== -1);

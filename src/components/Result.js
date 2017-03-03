@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 const ResultList = (props) => {
     return (
         <div>
-            <h3>Result</h3>
-            <p>{props.searchResult.data}</p>   
+            <h3 className="mui--text-headline">Result</h3>
+            <p className="mui--text-subhead">{props.searchResult.data}</p>   
         </div>
     )
 }
